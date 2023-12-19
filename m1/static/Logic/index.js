@@ -9,8 +9,8 @@ const sendReq = async () => {
     body: JSON.stringify({ num: num }),
   }).then((response) =>
     response.json().then((data) => ({
-      numExt: data,
+      numInc: data,
     }))
   );
-  document.getElementById("res").innerText = res.numExt;
+  document.getElementById("res").innerText = res.numInc;
 };
