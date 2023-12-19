@@ -39,7 +39,6 @@ connect(RABBITMQ_URL, opt)
           let result = "",
             c = 0;
           param = param.split("");
-          console.log(param);
           while (param.length || c) {
             let num = param.pop();
             if (num === ".") {
