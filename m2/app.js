@@ -40,12 +40,11 @@ connect(RABBITMQ_URL, opt)
             c = 0;
           param = param.split("");
           while (param.length || c) {
-            let num = param.pop();
-            if (num === ".") {
-              result = num + result;
-              num = param.pop();
+            if (param[param.length - 1] === ".") {
+              result = param[param.length - 1] + result;
+              param.pop();
             }
-            c += num * 2;
+            c += ~~param.pop() * 2;
             result = (c % 10) + result;
             c = c > 9;
           }
