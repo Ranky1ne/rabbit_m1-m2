@@ -5,11 +5,15 @@ const logger = winston.createLogger({
   level: "info",
   format: winston.format.combine(
     winston.format.json(),
+    winston.format.timestamp(),
     winston.format.prettyPrint()
   ),
   defaultMeta: { service: "log-service" },
   transports: [
-    new winston.transports.File({ filename: "../log/logsErrorsM2.log", level: "error" }),
+    new winston.transports.File({
+      filename: "../log/logsErrorsM2.log",
+      level: "error",
+    }),
   ],
 });
 
@@ -35,8 +39,14 @@ connect(RABBITMQ_URL, opt)
           let result = "",
             c = 0;
           param = param.split("");
+          console.log(param);
           while (param.length || c) {
-            c += ~~param.pop() * 2;
+            let num = param.pop();
+            if (num === ".") {
+              result = num + result;
+              num = param.pop();
+            }
+            c += num * 2;
             result = (c % 10) + result;
             c = c > 9;
           }
@@ -48,5 +58,5 @@ connect(RABBITMQ_URL, opt)
     );
   })
   .catch((err) => {
-    logger.log("error", { message:  err  });
+    logger.log("error", { message: err });
   });
